@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LoaderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GAME_INFO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="HOME_TEAM" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VISITOR_TEAM" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="START_TIME" Type="datetime" />
+          <Property Name="END_TIME" Type="datetime" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="50" />
+          <Property Name="HOME_SCORE" Type="int" Nullable="false" />
+          <Property Name="VISITOR_SCORE" Type="int" Nullable="false" />
+          <Property Name="HomeCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="VisitorCode" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="GOALIE_SUMMARY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GAME_ID" Type="int" />
+          <Property Name="TEAM" Type="nvarchar" MaxLength="50" />
+          <Property Name="PLAYER_NUMBER" Type="int" />
+          <Property Name="POS" Type="nvarchar" MaxLength="10" />
+          <Property Name="PLAYER_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="EV" Type="datetime" />
+          <Property Name="PP" Type="datetime" />
+          <Property Name="SH" Type="datetime" />
+          <Property Name="TOT" Type="datetime" />
+          <Property Name="GSA1" Type="nvarchar" MaxLength="10" />
+          <Property Name="GSA2" Type="nvarchar" MaxLength="10" />
+          <Property Name="GSA3" Type="nvarchar" MaxLength="10" />
+          <Property Name="W" Type="int" />
+          <Property Name="L" Type="int" />
+          <Property Name="OT" Type="int" />
+          <Property Name="SO" Type="int" />
+          <Property Name="PlayerId" Type="int" />
+        </EntityType>
+        <EntityType Name="NHL_PLAYER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="LAST_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TEAM" Type="nvarchar" MaxLength="50" />
+          <Property Name="PLAYER_NUMBER" Type="int" Nullable="false" />
+          <Property Name="ELIGIBLE_POSITION" Type="nvarchar" MaxLength="5" />
+          <Property Name="ACTIVE" Type="bit" Nullable="false" />
+          <Property Name="TSN_NAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="NHLTeamCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="RotoworldId" Type="int" />
+        </EntityType>
+        <EntityType Name="PLAYER_SUMMARY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GAME_ID" Type="int" />
+          <Property Name="TEAM" Type="nvarchar" MaxLength="50" />
+          <Property Name="PLAYER_NUMBER" Type="int" />
+          <Property Name="POS" Type="nchar" MaxLength="10" />
+          <Property Name="PLAYER_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="G" Type="int" />
+          <Property Name="A" Type="int" />
+          <Property Name="P" Type="int" />
+          <Property Name="PLUS_MINUS" Type="int" />
+          <Property Name="PN" Type="int" />
+          <Property Name="PIM" Type="int" />
+          <Property Name="TOT" Type="int" />
+          <Property Name="SHF" Type="int" />
+          <Property Name="AVG" Type="int" />
+          <Property Name="PP" Type="int" />
+          <Property Name="SH" Type="int" />
+          <Property Name="EV" Type="int" />
+          <Property Name="S" Type="int" />
+          <Property Name="AB" Type="int" />
+          <Property Name="MS" Type="int" />
+          <Property Name="HT" Type="int" />
+          <Property Name="GV" Type="int" />
+          <Property Name="TK" Type="int" />
+          <Property Name="BS" Type="int" />
+          <Property Name="FW" Type="int" />
+          <Property Name="FL" Type="int" />
+          <Property Name="FP" Type="int" />
+          <Property Name="PlayerId" Type="int" />
+          <Property Name="GSA1" Type="nvarchar" MaxLength="10" />
+          <Property Name="GSA2" Type="nvarchar" MaxLength="10" />
+          <Property Name="GSA3" Type="nvarchar" MaxLength="10" />
+          <Property Name="W" Type="int" />
+          <Property Name="L" Type="int" />
+          <Property Name="OT" Type="int" />
+          <Property Name="SO" Type="int" />
+        </EntityType>
+        <EntityContainer Name="LoaderModelStoreContainer">
+          <EntitySet Name="GAME_INFO" EntityType="Self.GAME_INFO" Schema="nlpool" store:Type="Tables" />
+          <EntitySet Name="GOALIE_SUMMARY" EntityType="Self.GOALIE_SUMMARY" Schema="nlpool" store:Type="Tables" />
+          <EntitySet Name="NHL_PLAYER" EntityType="Self.NHL_PLAYER" Schema="nlpool" store:Type="Tables" />
+          <EntitySet Name="PLAYER_SUMMARY" EntityType="Self.PLAYER_SUMMARY" Schema="nlpool" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LoaderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NLPoolEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GAME_INFO" EntityType="LoaderModel.GAME_INFO" />
+          <EntitySet Name="GOALIE_SUMMARY" EntityType="LoaderModel.GOALIE_SUMMARY" />
+          <EntitySet Name="NHL_PLAYER" EntityType="LoaderModel.NHL_PLAYER" />
+          <EntitySet Name="PLAYER_SUMMARY" EntityType="LoaderModel.PLAYER_SUMMARY" />
+        </EntityContainer>
+        <EntityType Name="GAME_INFO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="HOME_TEAM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VISITOR_TEAM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="START_TIME" Type="DateTime" Precision="3" />
+          <Property Name="END_TIME" Type="DateTime" Precision="3" />
+          <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HOME_SCORE" Type="Int32" Nullable="false" />
+          <Property Name="VISITOR_SCORE" Type="Int32" Nullable="false" />
+          <Property Name="HomeCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="VisitorCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="GOALIE_SUMMARY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GAME_ID" Type="Int32" />
+          <Property Name="TEAM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PLAYER_NUMBER" Type="Int32" />
+          <Property Name="POS" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PLAYER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EV" Type="DateTime" Precision="3" />
+          <Property Name="PP" Type="DateTime" Precision="3" />
+          <Property Name="SH" Type="DateTime" Precision="3" />
+          <Property Name="TOT" Type="DateTime" Precision="3" />
+          <Property Name="GSA1" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="GSA2" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="GSA3" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="W" Type="Int32" />
+          <Property Name="L" Type="Int32" />
+          <Property Name="OT" Type="Int32" />
+          <Property Name="SO" Type="Int32" />
+          <Property Name="PlayerId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="NHL_PLAYER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="LAST_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FIRST_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TEAM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PLAYER_NUMBER" Type="Int32" Nullable="false" />
+          <Property Name="ELIGIBLE_POSITION" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVE" Type="Boolean" Nullable="false" />
+          <Property Name="TSN_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NHLTeamCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="RotoworldId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="PLAYER_SUMMARY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GAME_ID" Type="Int32" />
+          <Property Name="TEAM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PLAYER_NUMBER" Type="Int32" />
+          <Property Name="POS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PLAYER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="G" Type="Int32" />
+          <Property Name="A" Type="Int32" />
+          <Property Name="P" Type="Int32" />
+          <Property Name="PLUS_MINUS" Type="Int32" />
+          <Property Name="PN" Type="Int32" />
+          <Property Name="PIM" Type="Int32" />
+          <Property Name="TOT" Type="Int32" />
+          <Property Name="SHF" Type="Int32" />
+          <Property Name="AVG" Type="Int32" />
+          <Property Name="PP" Type="Int32" />
+          <Property Name="SH" Type="Int32" />
+          <Property Name="EV" Type="Int32" />
+          <Property Name="S" Type="Int32" />
+          <Property Name="AB" Type="Int32" />
+          <Property Name="MS" Type="Int32" />
+          <Property Name="HT" Type="Int32" />
+          <Property Name="GV" Type="Int32" />
+          <Property Name="TK" Type="Int32" />
+          <Property Name="BS" Type="Int32" />
+          <Property Name="FW" Type="Int32" />
+          <Property Name="FL" Type="Int32" />
+          <Property Name="FP" Type="Int32" />
+          <Property Name="PlayerId" Type="Int32" />
+          <Property Name="GSA1" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="GSA2" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="GSA3" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="W" Type="Int32" />
+          <Property Name="L" Type="Int32" />
+          <Property Name="OT" Type="Int32" />
+          <Property Name="SO" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LoaderModelStoreContainer" CdmEntityContainer="NLPoolEntities">
+          <EntitySetMapping Name="GAME_INFO">
+            <EntityTypeMapping TypeName="LoaderModel.GAME_INFO">
+              <MappingFragment StoreEntitySet="GAME_INFO">
+                <ScalarProperty Name="VisitorCode" ColumnName="VisitorCode" />
+                <ScalarProperty Name="HomeCode" ColumnName="HomeCode" />
+                <ScalarProperty Name="VISITOR_SCORE" ColumnName="VISITOR_SCORE" />
+                <ScalarProperty Name="HOME_SCORE" ColumnName="HOME_SCORE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+                <ScalarProperty Name="START_TIME" ColumnName="START_TIME" />
+                <ScalarProperty Name="VISITOR_TEAM" ColumnName="VISITOR_TEAM" />
+                <ScalarProperty Name="HOME_TEAM" ColumnName="HOME_TEAM" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GOALIE_SUMMARY">
+            <EntityTypeMapping TypeName="LoaderModel.GOALIE_SUMMARY">
+              <MappingFragment StoreEntitySet="GOALIE_SUMMARY">
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="SO" ColumnName="SO" />
+                <ScalarProperty Name="OT" ColumnName="OT" />
+                <ScalarProperty Name="L" ColumnName="L" />
+                <ScalarProperty Name="W" ColumnName="W" />
+                <ScalarProperty Name="GSA3" ColumnName="GSA3" />
+                <ScalarProperty Name="GSA2" ColumnName="GSA2" />
+                <ScalarProperty Name="GSA1" ColumnName="GSA1" />
+                <ScalarProperty Name="TOT" ColumnName="TOT" />
+                <ScalarProperty Name="SH" ColumnName="SH" />
+                <ScalarProperty Name="PP" ColumnName="PP" />
+                <ScalarProperty Name="EV" ColumnName="EV" />
+                <ScalarProperty Name="PLAYER_NAME" ColumnName="PLAYER_NAME" />
+                <ScalarProperty Name="POS" ColumnName="POS" />
+                <ScalarProperty Name="PLAYER_NUMBER" ColumnName="PLAYER_NUMBER" />
+                <ScalarProperty Name="TEAM" ColumnName="TEAM" />
+                <ScalarProperty Name="GAME_ID" ColumnName="GAME_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NHL_PLAYER">
+            <EntityTypeMapping TypeName="LoaderModel.NHL_PLAYER">
+              <MappingFragment StoreEntitySet="NHL_PLAYER">
+                <ScalarProperty Name="RotoworldId" ColumnName="RotoworldId" />
+                <ScalarProperty Name="NHLTeamCode" ColumnName="NHLTeamCode" />
+                <ScalarProperty Name="TSN_NAME" ColumnName="TSN_NAME" />
+                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+                <ScalarProperty Name="ELIGIBLE_POSITION" ColumnName="ELIGIBLE_POSITION" />
+                <ScalarProperty Name="PLAYER_NUMBER" ColumnName="PLAYER_NUMBER" />
+                <ScalarProperty Name="TEAM" ColumnName="TEAM" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PLAYER_SUMMARY">
+            <EntityTypeMapping TypeName="LoaderModel.PLAYER_SUMMARY">
+              <MappingFragment StoreEntitySet="PLAYER_SUMMARY">
+                <ScalarProperty Name="SO" ColumnName="SO" />
+                <ScalarProperty Name="OT" ColumnName="OT" />
+                <ScalarProperty Name="L" ColumnName="L" />
+                <ScalarProperty Name="W" ColumnName="W" />
+                <ScalarProperty Name="GSA3" ColumnName="GSA3" />
+                <ScalarProperty Name="GSA2" ColumnName="GSA2" />
+                <ScalarProperty Name="GSA1" ColumnName="GSA1" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="FP" ColumnName="FP" />
+                <ScalarProperty Name="FL" ColumnName="FL" />
+                <ScalarProperty Name="FW" ColumnName="FW" />
+                <ScalarProperty Name="BS" ColumnName="BS" />
+                <ScalarProperty Name="TK" ColumnName="TK" />
+                <ScalarProperty Name="GV" ColumnName="GV" />
+                <ScalarProperty Name="HT" ColumnName="HT" />
+                <ScalarProperty Name="MS" ColumnName="MS" />
+                <ScalarProperty Name="AB" ColumnName="AB" />
+                <ScalarProperty Name="S" ColumnName="S" />
+                <ScalarProperty Name="EV" ColumnName="EV" />
+                <ScalarProperty Name="SH" ColumnName="SH" />
+                <ScalarProperty Name="PP" ColumnName="PP" />
+                <ScalarProperty Name="AVG" ColumnName="AVG" />
+                <ScalarProperty Name="SHF" ColumnName="SHF" />
+                <ScalarProperty Name="TOT" ColumnName="TOT" />
+                <ScalarProperty Name="PIM" ColumnName="PIM" />
+                <ScalarProperty Name="PN" ColumnName="PN" />
+                <ScalarProperty Name="PLUS_MINUS" ColumnName="PLUS_MINUS" />
+                <ScalarProperty Name="P" ColumnName="P" />
+                <ScalarProperty Name="A" ColumnName="A" />
+                <ScalarProperty Name="G" ColumnName="G" />
+                <ScalarProperty Name="PLAYER_NAME" ColumnName="PLAYER_NAME" />
+                <ScalarProperty Name="POS" ColumnName="POS" />
+                <ScalarProperty Name="PLAYER_NUMBER" ColumnName="PLAYER_NUMBER" />
+                <ScalarProperty Name="TEAM" ColumnName="TEAM" />
+                <ScalarProperty Name="GAME_ID" ColumnName="GAME_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

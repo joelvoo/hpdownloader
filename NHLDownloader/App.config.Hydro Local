@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <add key="PROXY_HOST"
+         value="kdcbchwbs01.bchydro.adroot.bchydro.bc.ca"/>
+    <add key="PROXY_PORT"
+         value="8080"/>
+  </appSettings>
+  <connectionStrings>
+    <!--<add name="NLPoolEntities" connectionString="metadata=res://*/Loader.csdl|res://*/Loader.ssdl|res://*/Loader.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=10.185.102.80;initial catalog=nlpool;persist security info=True;user id=LOADER;password=LOADER;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />-->
+    <add name="NLPoolEntities" connectionString="metadata=res://*/Loader.csdl|res://*/Loader.ssdl|res://*/Loader.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=10.185.102.80\dev;initial catalog=nlpool;persist security info=True;user id=LOADER;password=LOADER;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />    
+  </connectionStrings>
+
+</configuration>

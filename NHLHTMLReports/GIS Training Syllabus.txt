@@ -1,0 +1,33 @@
+Day 1 
+Core Smallworld
+VMDS (alternatives, checkpoints, merge & posting)
+Spatial data (Nodes, Points, Links, Geometry, Connectivity, Manifolds)
+Common Modules (Map Window (trails), Explorer, Object Editor)
+Admin tool, Ace, Style, Object Control
+
+Exercises
+
+Day 2 (Linlin)
+Magik Language (object and classes, apropos, magik syntax, 
+class browser, unset, symbols, procedures, etc…)
+Collection Classes (indexed collections, keyed collections)
+Magik Objects (classes/instances, commenting)
+
+Exercise
+Day 3 (Linlin)
+Object Inheritance (superclass, subclass, multiple inheritance)
+
+Day 4
+GUI (frames, layout managers)
+Intro to Application Development (modules, SWAF, messages)
+
+Day 5
+Smallworld GIS Application Development (App Layout, 
+Building Images (closed/open/soc), 
+Layered Product, Databus)
+Oracle (and oracle spatial)
+
+
+DAD INT (use checkpoints/alternatives for ace & style) can we use?
+Setup Cambridge as alternative. Environment?
+Just need Citrix

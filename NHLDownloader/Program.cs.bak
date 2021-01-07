@@ -1,0 +1,251 @@
+﻿using NHLHTMLReports;
+using System;
+using System.IO;
+using System.Net;
+using System.Configuration;
+using System.Text;
+
+namespace NHLDownloader
+{
+    class Program
+    {
+        static Boolean PositionFlag;
+        static Boolean PlayerFlag;
+        static Boolean ScheduleFlag;
+        static Boolean ActiveGameFlag;
+        static Boolean InactiveGameFlag;
+		static Boolean InjuriesFlag;
+        static DateTime? StartDate = null;
+        static DateTime? EndDate = null;
+        static int StartId;
+        static int EndId;
+
+        static void InitalizeConfig()
+        {
+            string PROXY_SERVER = ConfigurationManager.AppSettings["PROXY_HOST"];
+            int PROXY_PORT = Int32.Parse(ConfigurationManager.AppSettings["PROXY_PORT"]);
+
+            if (PROXY_SERVER != "")
+            {
+                WebProxy wp = new WebProxy(PROXY_SERVER, PROXY_PORT);
+                wp.UseDefaultCredentials = true;
+                Config.Proxy = wp;
+            }
+
+        }
+        static WebProxy GetWebProxy()
+        {
+            string PROXY_SERVER = ConfigurationManager.AppSettings["PROXY_HOST"];
+            int PROXY_PORT = Int32.Parse(ConfigurationManager.AppSettings["PROXY_PORT"]);
+
+            if (PROXY_SERVER != "")
+            {
+                WebProxy wp = new WebProxy(PROXY_SERVER, PROXY_PORT);
+                wp.UseDefaultCredentials = true;
+                return wp;
+            }
+            return null;
+        }
+
+        static Stream GetResponseStream(string html)
+        {
+            string PROXY_SERVER = ConfigurationManager.AppSettings["PROXY_HOST"];
+            int PROXY_PORT = Int32.Parse(ConfigurationManager.AppSettings["PROXY_PORT"]);
+
+            WebRequest wr = WebRequest.Create(html);
+            if (PROXY_SERVER != "")
+            {
+                WebProxy wp = new WebProxy(PROXY_SERVER, PROXY_PORT);
+                wp.UseDefaultCredentials = true;
+                wr.Proxy = wp;
+            }
+
+            return wr.GetResponse().GetResponseStream();
+        }
+
+        static void Main(string[] args)
+        {
+            InitalizeConfig();
+
+            foreach (string s in args)
+            {
+                String[] commands = s.Split(':');
+                switch (commands[0])
+                {
+                    case "position":
+                        PositionFlag = true;
+                        break;
+                    case "player":
+                        PlayerFlag = true;
+                        break;
+                    case "sched":
+                        ScheduleFlag = true;
+                        break;
+                    case "active":
+                        ActiveGameFlag = true;
+                        break;
+                    case "inactive":
+                        InactiveGameFlag = true;
+                        break;
+                    case "startDate":
+                        if (!SetValue(commands, out StartDate))
+                            return;
+                        break;
+                    case "endDate":
+                        if (!SetValue(commands, out EndDate))
+                            return;
+                        break;
+                    case "date":
+                        if (!SetValue(commands, out StartDate) || !SetValue(commands, out EndDate))
+                            return;
+                        break;
+                    case "startId":
+                        if (!SetValue(commands, out StartId))
+                            return;
+                        break;
+                    case "endId":
+                        if (!SetValue(commands, out EndId))
+                            return;
+                        break;
+                    case "id":
+                        if (!SetValue(commands, out StartId) || !SetValue(commands, out EndId))
+                            return;
+                        break;
+                    case "today":
+                        StartDate = DateTime.Today;
+                        EndDate = DateTime.Today;
+                        break;
+                    case "week":
+                        StartDate = DateTime.Today.AddDays(-7);
+                        EndDate = DateTime.Today;
+                        break;
+                    case "help":
+                        WriteHelp();
+                        break;
+                    default:
+                        System.Console.WriteLine(commands[0] + " is an unrecognized command.");
+                        break;
+                }
+            }
+
+            if (ScheduleFlag)
+                if (StartDate.HasValue && EndDate.HasValue)
+                {
+                    ScheduleDownloader sd = new ScheduleDownloader(GetWebProxy());
+                    sd.DownloadGames(Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
+                }
+
+            if (ActiveGameFlag)
+            {
+                // TODO: add handling
+                GameDownloader gd = new GameDownloader();
+                gd.Download();
+            }
+
+            if (InactiveGameFlag)
+            {
+                GameDownloader gd = new GameDownloader();
+                if (StartDate.HasValue && EndDate.HasValue)
+                    gd.Download(Convert.ToDateTime(StartDate), Convert.ToDateTime(EndDate));
+                else if (StartId != -1 & EndId != -1)
+                    gd.Download(StartId, EndId);
+                else
+                {
+                    System.Console.WriteLine("Not enough parameters were provided.");
+                    return;
+                }
+            }
+
+            if (PlayerFlag)
+            {
+                // TODO: add handling
+                PlayerDownloader pd = new PlayerDownloader();
+                if (StartId != 0 & EndId != 0)
+                    pd.Download(StartId, EndId);
+                else if (StartId == 0 & EndId == 0)
+                {
+                    pd.Download();
+                }
+                else
+                {
+                    System.Console.WriteLine("Not enough parameters were provided.");
+                    return;
+                }
+            }
+            if (PositionFlag)
+            {
+                // TODO: add handling
+                PositionDownloader pd = new PositionDownloader(GetWebProxy());
+                if (StartId != 0 & EndId != 0)
+                    pd.Download(StartId, EndId);
+                else
+                    pd.Download();
+            }
+            if (InjuriesFlag)
+            {
+                InjuryDownloader id = new InjuryDownloader(GetWebProxy());
+                id.Download();
+			}
+        }
+
+        static Boolean SetValue(String[] commands, out Int32 value)
+        {
+            if (commands.Length > 1)
+                value = Int32.Parse(commands[1]);
+            else
+            {
+                value = -1;
+                System.Console.WriteLine("Date value not provided.");
+                return false;
+            }
+            return true;
+        }
+
+        static Boolean SetValue(String[] commands, out DateTime? value)
+        {
+            if (commands.Length > 1)
+                value = DateTime.Parse(commands[1]);
+            else
+            {
+                value = DateTime.MinValue;
+                System.Console.WriteLine("Date value not provided.");
+                return false;
+            }
+            return true;
+        }
+
+        static void WriteHelp()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("active - downloads active games");
+            sb.Append(Environment.NewLine);
+            sb.Append("inactive - downloads games based on date or id specifiers");
+            sb.Append(Environment.NewLine);
+            sb.Append("player - downloads players based on id specifiers");
+            sb.Append(Environment.NewLine);
+            sb.Append("sched - downloads game sched based on date or id specifiers");
+            sb.Append(Environment.NewLine);
+            sb.Append("pos - downloads player positions based on id specifiers");
+            sb.Append(Environment.NewLine);
+            sb.Append("startId - specifier for game or player id start range");
+            sb.Append(Environment.NewLine);
+            sb.Append("endId - specifier for game or player id start range");
+            sb.Append(Environment.NewLine);
+            sb.Append("id - specifier for single game or player id");
+            sb.Append(Environment.NewLine);
+            sb.Append("startDate - specifier for game date start range");
+            sb.Append(Environment.NewLine);
+            sb.Append("endDate - specifier for game date start range");
+            sb.Append(Environment.NewLine);
+            sb.Append("date - specifier for single game date");
+            sb.Append(Environment.NewLine);
+            sb.Append("today - specifier for today as game date");
+            sb.Append(Environment.NewLine);
+            sb.Append("week - specifier for past week as game date range");
+            sb.Append(Environment.NewLine);
+
+            System.Console.Write(sb);
+        }
+
+    }
+}

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <appSettings>
+    <add key="PROXY_HOST"
+         value=""/>
+    <add key="PROXY_PORT"
+         value="80"/>
+  </appSettings>
+  <connectionStrings>
+    <add name="NL_DB"
+         connectionString="Data Source=localhost;Initial Catalog=NL_DEV;"
+         providerName="System.Data.SqlClient"/>
+    <add name="NL_DEVEntities" connectionString="metadata=res://*/NLPool.csdl|res://*/NLPool.ssdl|res://*/NLPool.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=HY201413\SQLEXPRESS;initial catalog=NL_DEV;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+  </connectionStrings>
+
+</configuration>
