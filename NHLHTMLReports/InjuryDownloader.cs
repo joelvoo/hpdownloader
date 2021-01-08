@@ -13,8 +13,8 @@ namespace NHLHTMLReports
 {
     public class InjuryDownloader
     {
-        string BaseUrl = "http://stats.tsn.ca/GET/urn:tsn:nhl:injuries?type=json";
-        string Referer = "http://www.tsn.ca/nhl/injuries";
+        string BaseUrl = "https://stats.tsn.ca/GET/urn:tsn:nhl:injuries?type=json";
+        string Referer = "https://www.tsn.ca/nhl/injuries";
         Log log = Log.Instance;
 
         WebProxy Proxy;
@@ -23,7 +23,8 @@ namespace NHLHTMLReports
             Proxy = proxy;
         }
         public void Download()
-        {            
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             StreamReader reader = new StreamReader(HTMLHelper.GetResponseStream(BaseUrl,Proxy,Referer));
             String json = reader.ReadToEnd();
             //String injuries = JSONP.ParseJSON(reader.ReadToEnd());
