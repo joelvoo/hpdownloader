@@ -17,6 +17,8 @@ namespace NHLHTMLReports
                 var wr = (HttpWebRequest) WebRequest.Create(html);
                 if (Config.Proxy != null)
                 {
+                    ServicePointManager.Expect100Continue = true;
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                     Config.Proxy.UseDefaultCredentials = true;
                     wr.Proxy = Config.Proxy;
                 }
