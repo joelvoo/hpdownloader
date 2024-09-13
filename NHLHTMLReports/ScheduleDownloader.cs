@@ -41,9 +41,9 @@ namespace NHLHTMLReports
                     try
                     {                        
 
-                        Log.Instance.WriteLine(String.Format("Downloading schedule between {0} and {1}", startDate, endDate));
+                        Log.Instance.WriteLine(String.Format("Downloading schedule for week of {0}", day.ToShortDateString()));
                         Log.Instance.WriteLine(String.Format("Using url: {0}", url));
-                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                        
                         StreamReader reader = new StreamReader(HTMLHelper.GetResponseStream(url));
                         String json = reader.ReadToEnd();
 
