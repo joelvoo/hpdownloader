@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Configuration;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NHLDownloader
 {
@@ -63,7 +64,7 @@ namespace NHLDownloader
             return wr.GetResponse().GetResponseStream();
         }
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             InitalizeConfig();
 
@@ -187,7 +188,7 @@ namespace NHLDownloader
             if (InjuriesFlag)
             {
                 InjuryDownloader id = new InjuryDownloader(GetWebProxy());
-                id.Download();
+                id.DownloadAsync().Wait();
 			}
         }
 

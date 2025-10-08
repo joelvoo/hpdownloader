@@ -62,7 +62,7 @@ namespace NHLHTMLReports
         
         public List<Int32> GetActiveGameIDs()
         {
-            DateTime activeDate = DateTime.Now;
+            DateTimeOffset activeDate = DateTimeOffset.UtcNow;
 
             using (NLPoolEntities context = new NLPoolEntities())
             {

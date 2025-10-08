@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,8 @@ namespace NHLHTMLReports
         {
             try
             {
+                //HttpClient client = new();
+
                 var wr = (HttpWebRequest) WebRequest.Create(html);
                 if (Config.Proxy != null)
                 {
@@ -23,9 +26,10 @@ namespace NHLHTMLReports
                 if (referer != null)
                     wr.Referer = referer;
 
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-                return wr.GetResponse().GetResponseStream();
+                WebResponse resp = wr.GetResponse();
+                return resp.GetResponseStream();
             }
             catch (WebException ex)
             {

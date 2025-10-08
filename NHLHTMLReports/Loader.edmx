@@ -12,13 +12,14 @@
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="HOME_TEAM" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="VISITOR_TEAM" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="START_TIME" Type="datetime" />
-          <Property Name="END_TIME" Type="datetime" />
+          <Property Name="START_TIME" Type="datetimeoffset" Precision="7" />
+          <Property Name="END_TIME" Type="datetimeoffset" Precision="7" />
           <Property Name="STATUS" Type="nvarchar" MaxLength="50" />
           <Property Name="HOME_SCORE" Type="int" Nullable="false" />
           <Property Name="VISITOR_SCORE" Type="int" Nullable="false" />
           <Property Name="HomeCode" Type="nvarchar" MaxLength="5" />
           <Property Name="VisitorCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="GameType" Type="nchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="GOALIE_SUMMARY">
           <Key>
@@ -57,6 +58,7 @@
           <Property Name="TSN_NAME" Type="nvarchar" MaxLength="100" />
           <Property Name="NHLTeamCode" Type="nvarchar" MaxLength="5" />
           <Property Name="RotoworldId" Type="int" />
+          <Property Name="YahooKey" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PLAYER_SUMMARY">
           <Key>
@@ -122,13 +124,14 @@
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="HOME_TEAM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="VISITOR_TEAM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="START_TIME" Type="DateTime" Precision="3" />
-          <Property Name="END_TIME" Type="DateTime" Precision="3" />
+          <Property Name="START_TIME" Type="DateTimeOffset" Precision="7" />
+          <Property Name="END_TIME" Type="DateTimeOffset" Nullable="true" Precision="7" />
           <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="HOME_SCORE" Type="Int32" Nullable="false" />
           <Property Name="VISITOR_SCORE" Type="Int32" Nullable="false" />
           <Property Name="HomeCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="VisitorCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="GameType" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="GOALIE_SUMMARY">
           <Key>
@@ -167,6 +170,7 @@
           <Property Name="TSN_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="NHLTeamCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="RotoworldId" Type="Int32" />
+          <Property Name="YahooKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PLAYER_SUMMARY">
           <Key>
@@ -218,6 +222,7 @@
           <EntitySetMapping Name="GAME_INFO">
             <EntityTypeMapping TypeName="LoaderModel.GAME_INFO">
               <MappingFragment StoreEntitySet="GAME_INFO">
+                <ScalarProperty Name="GameType" ColumnName="GameType" />
                 <ScalarProperty Name="VisitorCode" ColumnName="VisitorCode" />
                 <ScalarProperty Name="HomeCode" ColumnName="HomeCode" />
                 <ScalarProperty Name="VISITOR_SCORE" ColumnName="VISITOR_SCORE" />
@@ -258,6 +263,7 @@
           <EntitySetMapping Name="NHL_PLAYER">
             <EntityTypeMapping TypeName="LoaderModel.NHL_PLAYER">
               <MappingFragment StoreEntitySet="NHL_PLAYER">
+                <ScalarProperty Name="YahooKey" ColumnName="YahooKey" />
                 <ScalarProperty Name="RotoworldId" ColumnName="RotoworldId" />
                 <ScalarProperty Name="NHLTeamCode" ColumnName="NHLTeamCode" />
                 <ScalarProperty Name="TSN_NAME" ColumnName="TSN_NAME" />

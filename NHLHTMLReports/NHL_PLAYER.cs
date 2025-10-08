@@ -24,5 +24,6 @@ namespace NHLHTMLReports
         public string TSN_NAME { get; set; }
         public string NHLTeamCode { get; set; }
         public Nullable<int> RotoworldId { get; set; }
+        public string YahooKey { get; set; }
     }
 }
